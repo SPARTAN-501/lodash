@@ -1,30 +1,35 @@
-/**
- * Creates an array of values by running each element of `array` thru `iteratee`.
- * The iteratee is invoked with three arguments: (value, index, array).
- *
- * @since 5.0.0
- * @category Array
- * @param {Array} array The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the new mapped array.
- * @example
- *
- * function square(n) {
- *   return n * n
- * }
- *
- * map([4, 8], square)
- * // => [16, 64]
- */
-function map(array, iteratee) {
-  let index = -1
-  const length = array == null ? 0 : array.length
-  const result = new Array(length)
+const words = ["ground", "control", "to", "major", "tom"];
 
-  while (++index < length) {
-    result[index] = iteratee(array[index], index, array)
+const map = function(array, callback) {
+  const results = [];
+  for (let item of array) {
+    results.push(callback(item));
   }
-  return result
+  return results;
 }
 
-export default map
+const eqArrays = function(arr1, arr2) {
+  let truthy = false;
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] === arr2[i]) {
+      truthy = true;
+    }
+    else {
+      truthy = false;
+    }
+  }
+  return truthy;
+}
+
+const assertArraysEqual = function(arr1, arr2) {
+  let result = eqArrays(arr1, arr2);
+  if (result === true) {
+    console.log(`✅✅✅ Assertion Passed: ${arr1}  === ${arr2}`);
+  } else {
+    console.log(`🛑🛑🛑 Assertion Failed: ${arr1} !== ${arr2}`);
+  }
+}
+
+const results1 = map(words, word => word[0]);
+console.log(results1);
+assertArraysEqual(results1, ["g", "c", "t", "m", "t"])
